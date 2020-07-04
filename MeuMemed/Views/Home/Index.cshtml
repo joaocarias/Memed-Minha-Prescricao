@@ -1,0 +1,52 @@
+﻿@model MeuMemed.ViewModel.Home.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col col-12">
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Médicos</h5>
+            </div>
+            <div class="card-body">
+                @foreach (var medico in Model.Medicos)
+                {
+                    <div class="row">
+                        <div class="col col-3">ID: <strong>@medico.MedicoId</strong></div>
+                        <div class="col col-9">Nome: <strong>@medico.NomeCompleto</strong></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Pacientes</h5>
+            </div>
+            <div class="card-body">
+                @foreach (var paciente in Model.Pacientes)
+                {
+                    <div class="row">
+                        <div class="col col-3">ID: <strong>@paciente.PacienteId</strong></div>
+                        <div class="col col-6">Nome: <strong>@paciente.Nome</strong></div>
+                        <div class="col col-3">Telefone: <strong>@paciente.Telefone</strong></div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+    </div>

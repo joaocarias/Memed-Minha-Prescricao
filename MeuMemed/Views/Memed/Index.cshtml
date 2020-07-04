@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MeuMemed</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        #memed-container {
+            margin: auto;
+            border: 4px solid black;
+            width: 810px;
+            height: 700px;
+        }
+    </style>
+
+</head>
+<body>
+
+    @{
+        ViewData["Title"] = "Index";
+        Layout = null;
+    }
+
+    <script type="text/javascript"
+            src="https://sandbox.memed.com.br/modulos/plataforma.sinapse-prescricao/build/sinapse-prescricao.min.js"
+            data-token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.WzM0Mzg0LCJlYTE4OTU2MzRiNjEwOTdmOGMwM2U5M2QzNWMwOTZmNCIsIjIwMjAtMDctMDIiLCJzaW5hcHNlLnByZXNjcmljYW8iLCJwYXJ0bmVyLjMuMjk3ODYiXQ.yDSRFIm72-EkI12oSMBUqSHFGq6msl7xnT4Ci9d9W40">
+    </script>
+
+    <script>
+        MdSinapsePrescricao.event.add('core:moduleInit', function moduleInitHandler(module) {
+            if (module.name === 'plataforma.prescricao') {
+                MdHub.command.send('plataforma.prescricao', 'setPaciente', {
+                    nome: 'Giovane da Silva',
+                    endereco: 'Rua Boa da Saúde, 123',
+                    cidade: 'Natal',
+                    telefone: '84996814868',
+                    idExterno: 'liga9800392'
+                }).then(function () {
+                    MdHub.module.show('plataforma.prescricao');
+                });
+
+            }
+        });
+
+        MdSinapsePrescricao.event.add('core:moduleInit', function (moduleData) {
+            if (moduleData.name === 'plataforma.prescricao') {
+                
+                MdHub.event.add('prescricaoImpressa', function (prescriptionData) {
+                    console.log(prescriptionData);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "CadastrarMedico";
+}
+
+<h1>CadastrarMedico</h1>
+
+<a href="#" class="listar-cidades">Cadastrar Cidades</a>
+
+@section Scripts{
+
+
+    <script>
+
+        console.log("cadastrar medico");
+
+        $('.listar-cidades').on("click", function () {
+            console.log("listando...");
+             $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("ObterCidades")',
+                    // data: { agendaId },
+                    success: function (retorno) {
+                        try {
+                            var json = JSON.parse(retorno);
+                            console.log(json);
+                        } catch (error) {
+                            console.log("Não foi possível obter a última ficha chamada");
+                        }
+                    },
+                    error: function (retorno) {
+                        console.log("Algo de errado aconteceu!");
+                    }
+                });
+        });
+
+
+        //$.ajax({
+        //    type: "POST",
+        //    crossDomain: true,
+        //    url: url,
+        //    accepts: "application/vnd.api+json",
+        //    cacheControl: "no-cache",
+        //    contentType: "application/json",
+        //    data: {
+        //         data,
+        //    },
+        //    dataType: 'json',
+
+        //    success: function (data) {
+        //        console.log(data);
+        //    },
+        //    error: function (data) {
+        //        console.log(data);
+        //    }
+
+        //});
+
+    </script>
+
+}
+

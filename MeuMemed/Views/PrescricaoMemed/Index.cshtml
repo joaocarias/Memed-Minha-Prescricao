@@ -1,0 +1,16 @@
+﻿@model MeuMemed.ViewModel.PrescricaoMemed.PrescricaoMemedViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<hr />
+
+@if (Model.PermiteCriar())
+{
+    <hr />
+
+    <p>Permite Criar</p>
+}
