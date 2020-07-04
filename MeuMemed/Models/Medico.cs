@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MeuMemed.Models
 {
+    [Table("medico")]
     public class Medico
     {
+        [Key]
+        [Required]
+        [Column("id")]
         public int MedicoId { get; private set; }
+        [Required]
+        [Column("nome")]
         public string Nome { get; private set; }
+        [Required]
+        [Column("sobrenome")]
         public string Sobrenome { get; private set; }
+        
+        [Column("data_nascimento")]
         public DateTime DataNascimento { get; private set; }
+        [Column("cpf")]
         public string CPF { get; private set; }
+        [Column("crm")]
         public string CRM { get; private set; }
+        [Column("uf")]
         public string UFCRM { get; private set; }
+        [Column("email")]
         public string Email { get; private set; }
+        [Column("sexo")]
         public string Sexo { get; private set; }
-        public IList<int> Cidades { get; private set; }
-        public IList<int> Especialidades { get; private set; }
-
+    
+        [Column("toten")]
         public string Toten { get; private set; }
+        [Column("idmemed")]
+        public string MemedId { get; private set; }
+
+        public IList<MedicoCidade> Cidades { get; private set; }
+        public IList<MedicoEspecialidade> Especialidades { get; private set; }        
 
         public Medico(int medicoId, string nome, string sobrenome)
         {
@@ -40,14 +59,14 @@ namespace MeuMemed.Models
 
         private Medico() { }
 
-        public void AdicionarCidade(int cidadeId)
+        public void AdicionarCidade(MedicoCidade valor)
         {
-            Cidades.Add(cidadeId);
+            Cidades.Add(valor);
         }
 
-        public void AdicionarEspecialidade(int especialidadeId)
+        public void AdicionarEspecialidade(MedicoEspecialidade valor)
         {
-            Especialidades.Add(especialidadeId);
+            Especialidades.Add(valor);
         }
 
         public string NomeCompleto {
@@ -60,6 +79,5 @@ namespace MeuMemed.Models
         {
             Toten = toten;
         }
-
     }
 }
