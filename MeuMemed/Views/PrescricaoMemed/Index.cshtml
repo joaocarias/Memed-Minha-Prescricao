@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    var toten = Model.Filtro != null && Model.Filtro.Medico != null ? Model.Filtro.Medico.Toten : ""; 
+    var toten = Model.Filtro != null && Model.Filtro.Medico != null ? Model.Filtro.Medico.Toten : "";
 }
 
 <h1>Index</h1>
@@ -23,6 +23,9 @@
 
 @section Scripts{
 
+    @if(Model.PermiteCriar()){
+
+
     <script type="text/javascript"
             src="https://sandbox.memed.com.br/modulos/plataforma.sinapse-prescricao/build/sinapse-prescricao.min.js"
             data-token="@toten"
@@ -33,15 +36,14 @@
         MdSinapsePrescricao.event.add('core:moduleInit', function moduleInitHandler(module) {
             if (module.name === 'plataforma.prescricao') {
                 MdHub.command.send('plataforma.prescricao', 'setPaciente', {
-                    nome: 'Giovane da Silva',
-                    endereco: 'Rua Boa da Saúde, 123',
-                    cidade: 'Natal',
-                    telefone: '84996814868',
-                    idExterno: 'liga9800392'
+                    nome: "@Model.Filtro.Paciente.Nome",
+                    endereco: "@Model.Filtro.Paciente.Endereco",
+                    cidade: "@Model.Filtro.Paciente.Cidade",
+                    telefone: "@Model.Filtro.Paciente.Telefone",
+                    idExterno: "@Model.Filtro.Paciente.PacienteId"
                 }).then(function () {
                     MdHub.module.show('plataforma.prescricao');
                 });
-
             }
         });
 
@@ -54,5 +56,7 @@
             }
         });
     </script>
+
+    }
 
 }
