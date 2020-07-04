@@ -19,6 +19,8 @@ namespace MeuMemed.Models
         public IList<int> Cidades { get; private set; }
         public IList<int> Especialidades { get; private set; }
 
+        public string Toten { get; private set; }
+
         public Medico(int medicoId, string nome, string sobrenome)
         {
             MedicoId = medicoId;
@@ -52,6 +54,11 @@ namespace MeuMemed.Models
             get {
                 return Nome + " " + Sobrenome;
             }
+        }
+
+        public void DefinirToten(string toten)
+        {
+            Toten = toten;
         }
 
     }

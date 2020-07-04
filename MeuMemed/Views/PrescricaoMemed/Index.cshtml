@@ -2,15 +2,57 @@
 
 @{
     ViewData["Title"] = "Index";
+    var toten = Model.Filtro != null && Model.Filtro.Medico != null ? Model.Filtro.Medico.Toten : ""; 
 }
 
 <h1>Index</h1>
 
 <hr />
 
+<partial name="_FormFiltro" model="@Model.Filtro" />
+
 @if (Model.PermiteCriar())
 {
     <hr />
 
-    <p>Permite Criar</p>
+    <h3>Prescrição</h3>
+
+    <div class="memed-container" id="memed-container"></div>
+
+}
+
+@section Scripts{
+
+    <script type="text/javascript"
+            src="https://sandbox.memed.com.br/modulos/plataforma.sinapse-prescricao/build/sinapse-prescricao.min.js"
+            data-token="@toten"
+            data-container="memed-container">
+    </script>
+
+    <script>
+        MdSinapsePrescricao.event.add('core:moduleInit', function moduleInitHandler(module) {
+            if (module.name === 'plataforma.prescricao') {
+                MdHub.command.send('plataforma.prescricao', 'setPaciente', {
+                    nome: 'Giovane da Silva',
+                    endereco: 'Rua Boa da Saúde, 123',
+                    cidade: 'Natal',
+                    telefone: '84996814868',
+                    idExterno: 'liga9800392'
+                }).then(function () {
+                    MdHub.module.show('plataforma.prescricao');
+                });
+
+            }
+        });
+
+        MdSinapsePrescricao.event.add('core:moduleInit', function (moduleData) {
+            if (moduleData.name === 'plataforma.prescricao') {
+
+                MdHub.event.add('prescricaoImpressa', function (prescriptionData) {
+                    console.log(prescriptionData);
+                });
+            }
+        });
+    </script>
+
 }

@@ -23,6 +23,16 @@ namespace MeuMemed.Controllers
         public IActionResult Index(FiltroPrescricaoMemedViewModel filtro = null)
         {
             var model = new PrescricaoMemedViewModel(filtro);
+            if (filtro != null && filtro.MedicoId > 0)
+            {
+                filtro.Medico = _repositorioMedico.Obter(filtro.MedicoId.GetValueOrDefault());
+                filtro.Medico.DefinirToten("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.WzM0Mzg0LCJlYTE4OTU2MzRiNjEwOTdmOGMwM2U5M2QzNWMwOTZmNCIsIjIwMjAtMDctMDIiLCJzaW5hcHNlLnByZXNjcmljYW8iLCJwYXJ0bmVyLjMuMjk3ODYiXQ.yDSRFIm72-EkI12oSMBUqSHFGq6msl7xnT4Ci9d9W40");
+            }
+
+            if (filtro != null && filtro.PacienteId > 0)
+            {
+                filtro.Paciente = _repositorioPaciente.Obter(filtro.PacienteId.GetValueOrDefault());
+            }
 
             GerarViewBags();
             return View(model);
