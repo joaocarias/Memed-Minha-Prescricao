@@ -25,7 +25,7 @@ namespace MeuMemed.Models
         [Column("peso")]
         public int? Peso { get; private set; }
         [Column("altura")]
-        public float? Altura { get; private set; }
+        public double? Altura { get; private set; }
         [Column("nome_mae")]
         public string NomeMae { get; private set; }
         [Column("dificuldade_locomocao")]
@@ -39,7 +39,6 @@ namespace MeuMemed.Models
             Cidade = cidade;
             Telefone = telefone;
         }
-
         private Paciente() { }
     }
 }

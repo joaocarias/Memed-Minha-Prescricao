@@ -5,16 +5,16 @@ namespace MeuMemed.ViewModel.Home
 {
     public class HomeViewModel
     {
-        public IList<Medico> Medicos { get; set; }
-        public IList<Paciente> Pacientes { get; set; }
+        public IList<Models.Medico> Medicos { get; set; }
+        public IList<Models.Paciente> Pacientes { get; set; }
 
         public HomeViewModel()
         {
-            Medicos = new List<Medico>();
-            Pacientes = new List<Paciente>();
+            Medicos = new List<Models.Medico>();
+            Pacientes = new List<Models.Paciente>();
         }
 
-        public HomeViewModel(List<Medico> medicos, List<Paciente> pacientes)
+        public HomeViewModel(List<Models.Medico> medicos, List<Models.Paciente> pacientes)
         {
             Medicos = medicos;
             Pacientes = pacientes;

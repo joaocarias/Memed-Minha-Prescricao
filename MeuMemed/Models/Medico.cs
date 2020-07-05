@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MeuMemed.Models
 {
-    [Table("medico")]
+    [Table("medicos")]
     public class Medico
     {
         [Key]

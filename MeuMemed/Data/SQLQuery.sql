@@ -35,7 +35,7 @@ create table pacientes
 (
 	id int IDENTITY(92020230,7) PRIMARY KEY,
 	nome varchar(255) not null,
-	enderecao varchar(255),
+	endereco varchar(255),
 	cidade varchar(255),
 	telefone varchar(30) not null,
 	peso int,
@@ -44,4 +44,6 @@ create table pacientes
 	dificuldade_locomocao bit,
 );
 
+-- Renomear coluna
+ -- EXEC sp_rename 'pacientes.enderecao', 'endereco', 'COLUMN';
 

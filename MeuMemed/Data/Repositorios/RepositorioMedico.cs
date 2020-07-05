@@ -9,6 +9,13 @@ namespace MeuMemed.Data.Repositorios
 {
     public class RepositorioMedico : IRepositorioMedico
     {
+        private readonly Contexto _contexto;
+
+        public RepositorioMedico(Contexto contexto)
+        {
+            _contexto = contexto;
+        }
+
         private IList<Medico> _medicos = new List<Medico>()
         {
             new Medico(201001, "ANTONIO", "CARDOZO JALES"),
@@ -23,7 +30,7 @@ namespace MeuMemed.Data.Repositorios
 
         public List<Medico> ObterTodos()
         {
-            return _medicos.ToList();
+            return _contexto.Medicos.ToList();
         }
     }
 }

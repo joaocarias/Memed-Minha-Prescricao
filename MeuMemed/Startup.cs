@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace MeuMemed
 {
@@ -19,21 +20,23 @@ namespace MeuMemed
             Configuration = configuration;
         }
 
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
-            services.AddRazorPages();       
-            
-            services.AddDbContext<Contexto>(optionsAction: option => 
+            services.AddRazorPages()
+                    .AddRazorRuntimeCompilation();
+
+            services.AddDbContext<Contexto>(optionsAction: option =>
                     option.UseSqlServer(Configuration.GetConnectionString("Contexto"))
                 );
 
             services.AddScoped<IRepositorioMedico, RepositorioMedico>();
             services.AddScoped<IRepositorioPaciente, RepositorioPaciente>();
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
