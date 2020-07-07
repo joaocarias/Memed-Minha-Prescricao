@@ -5,9 +5,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Olá Mundo!</h1>
     <p>Mais sobre a integração com o Memed <a href="https://memed.com.br/" target="_blank"> acesse esse link</a>.</p>
 </div>
+@*<div class="row text-center">
+    <a href="#" class="cadastrarMedico">Cadastrar Medico</a> , <a href="#" class="recuperarMedico">Recuperar Medico</a>
+</div>*@
 
 <hr />
 
@@ -24,8 +27,20 @@
                     foreach (var medico in Model.Medicos)
                     {
                         <div class="row">
-                            <div class="col col-3">ID: <strong>@medico.MedicoId</strong></div>
-                            <div class="col col-9">Nome: <strong>@medico.NomeCompleto</strong></div>
+                            <div class="col col-2">ID: <strong>@medico.MedicoId</strong></div>
+                            <div class="col col-6">Nome: <strong>@medico.NomeCompleto</strong></div>
+                            <div class="col col-4">
+                                Memed:
+                                @if (medico.Toten != null && medico.Toten.Length > 0 && !medico.Toten.Equals(""))
+                                {
+                                    <strong>SIM</strong> <a href="#" class="recuperarMedico" id-medico="@medico.MedicoId">Atualizar Memed</a>
+ 
+                                }
+                                else
+                                {
+                                    <a href="#" id-medico="@medico.MedicoId" class="cadastrarMedico">Cadastrar</a> <a href="#" id-medico="@medico.MedicoId" class="recuperarMedico">Atualizar Memed</a>
+                                }
+                            </div>
                         </div>
                     }
                 }
@@ -39,7 +54,7 @@
                     </div>
                 }
                 <hr />
-            <a asp-action="Novo" asp-controller="Medico">Novo Médico</a>
+                <a asp-action="Novo" asp-controller="Medico">Novo Médico</a>
             </div>
         </div>
     </div>
@@ -78,4 +93,42 @@
 
     </div>
 </div>
-    </div>
+
+@section Scripts{
+    <script>
+
+        $('.cadastrarMedico').on('click', function () {
+            var id = $(this).attr("id-medico");
+
+            console.log(id);
+
+            $.get('/Memed/CadastrarMedico/', {
+                medicoId: id,
+            })
+                .done(function (data) {
+                    console.log(data);
+                })
+                .fail(function (error) {
+                    console.log('erro ao carregar os dados');
+                    console.log(error);
+                });
+        });
+
+        $('.recuperarMedico').on('click', function () {
+            var id = $(this).attr("id-medico");
+
+            console.log(id);
+
+            $.get('/Memed/RecuperarTotenMedico/', {
+                medicoId: id,
+            })
+                .done(function (data) {
+                    console.log(data);
+                })
+                .fail(function (error) {
+                    console.log('erro ao carregar os dados');
+                    console.log(error);
+                });
+        });
+    </script>
+}

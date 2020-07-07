@@ -18,7 +18,7 @@ namespace MeuMemed.Models
         [Required]
         [Column("sobrenome")]
         public string Sobrenome { get; private set; }
-        
+
         [Column("data_nascimento")]
         public DateTime DataNascimento { get; private set; }
         [Column("cpf")]
@@ -31,14 +31,14 @@ namespace MeuMemed.Models
         public string Email { get; private set; }
         [Column("sexo")]
         public string Sexo { get; private set; }
-    
+
         [Column("toten")]
         public string Toten { get; private set; }
         [Column("idmemed")]
         public string MemedId { get; private set; }
 
         public IList<MedicoCidade> Cidades { get; private set; }
-        public IList<MedicoEspecialidade> Especialidades { get; private set; }        
+        public IList<MedicoEspecialidade> Especialidades { get; private set; }
 
         public Medico(int medicoId, string nome, string sobrenome)
         {
@@ -78,6 +78,21 @@ namespace MeuMemed.Models
         public void DefinirToten(string toten)
         {
             Toten = toten;
+        }
+
+        public void DefinirEmail(string email)
+        {
+            Email = email;
+        }
+
+        public string ExternoId {
+            get {
+                return "liga-m" + MedicoId;
+            }
+        }
+
+        public void DefinirMemedId(string memedId) {
+            MemedId = memedId;
         }
     }
 }

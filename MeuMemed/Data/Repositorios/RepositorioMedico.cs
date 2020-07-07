@@ -16,16 +16,9 @@ namespace MeuMemed.Data.Repositorios
             _contexto = contexto;
         }
 
-        private IList<Medico> _medicos = new List<Medico>()
-        {
-            new Medico(201001, "ANTONIO", "CARDOZO JALES"),
-            new Medico(201023, "FRANCISCO", "GERFESSO DE ALMEIDA ANDRADE"),
-            new Medico(201601, "JOSÉ", "MARIA BEZERRA DE MEDEIROS"),
-        };
-
         public Medico Obter(int id)
         {
-           return _medicos.Where(x => x.MedicoId == id).FirstOrDefault();
+           return _contexto.Medicos.Where(x => x.MedicoId == id).FirstOrDefault();
         }
 
         public List<Medico> ObterTodos()

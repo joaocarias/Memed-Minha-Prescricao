@@ -47,3 +47,6 @@ create table pacientes
 -- Renomear coluna
  -- EXEC sp_rename 'pacientes.enderecao', 'endereco', 'COLUMN';
 
+ select * from pacientes;
+  select * from medicos;
+
