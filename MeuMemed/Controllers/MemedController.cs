@@ -129,6 +129,33 @@ namespace MeuMemed.Controllers
             return Json(retorno);
         }
 
+        public async Task<JsonResult> ObterPrescricaoPdf(int idPrescricao, string medicoCRM)
+        {
+            var medico = _repositorioMedico.ObterPorCRM(medicoCRM);
+                        
+            HttpClient _httpCliente = new HttpClient();
+            _httpCliente.DefaultRequestHeaders.Add("Accept", " application/vnd.api+json");
+
+            var uri = "https://" + _dominio_api + "/v1/prescricoes/"+idPrescricao+"/url-document/full?token="+medico.Toten;
+            var response = await _httpCliente.GetAsync(uri);
+
+            var retorno = response.Content.ReadAsStringAsync().Result;
+            var statusCode = response.StatusCode;
+
+            if (statusCode.Equals(HttpStatusCode.OK))
+            {                
+                retorno = (int)statusCode + " - " + retorno;
+            }
+            else
+            {
+                retorno = (int)statusCode + " - " + retorno;
+            }
+
+            _httpCliente.Dispose();
+                       
+            return Json(retorno);
+        }
+
         private StringContent GerarObjetoData(Medico medico)
         {
             var parametros =

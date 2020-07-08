@@ -18,7 +18,12 @@ namespace MeuMemed.Data.Repositorios
 
         public Medico Obter(int id)
         {
-           return _contexto.Medicos.Where(x => x.MedicoId == id).FirstOrDefault();
+            return _contexto.Medicos.Where(x => x.MedicoId == id).FirstOrDefault();
+        }
+
+        public Medico ObterPorCRM(string crm)
+        {
+            return _contexto.Medicos.Where(x => x.CRM.Equals(crm)).FirstOrDefault();
         }
 
         public List<Medico> ObterTodos()

@@ -50,3 +50,16 @@ create table pacientes
  select * from pacientes;
   select * from medicos;
 
+create table prescricoes_memed
+(
+	id int IDENTITY(1,1) PRIMARY KEY,
+	idprescricao_memed int not null,
+	prescricao_uuid_memed varchar(max) not null,
+	idmedico int foreign key references medicos(id) not null,
+	idpaciente int foreign key references pacientes(id) not null,
+	dt_cadastro smalldatetime,
+);
+
+ -- drop table prescricoes_memed;
+
+select * from prescricoes_memed;

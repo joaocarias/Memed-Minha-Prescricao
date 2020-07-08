@@ -1,26 +1,48 @@
-﻿namespace MeuMemed.ViewModel.PrescricaoMemed
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MeuMemed.ViewModel.PrescricaoMemed
 {
     public class PrescricaoMemedViewModel
     {
-        public FiltroPrescricaoMemedViewModel Filtro { get; set; }
-        
-        public PrescricaoMemedViewModel(FiltroPrescricaoMemedViewModel filtro)
+        [Key]
+        [Required]      
+        public int Id { get; set; }
+
+        [Required]       
+        public int PrescricaoMemedId { get; set; }
+
+        [Required]       
+        public int MedicoId { get; set; }
+               
+        [Required]        
+        public int PacienteId { get; set; }
+       
+        [Required]       
+        public DateTime DataCadastro { get; set; }
+
+        [Required]
+        public string PrescricaoUUIDMemed { get; private set; }
+
+        public PrescricaoMemedViewModel() { }
+
+        public PrescricaoMemedViewModel(int prescricaoMemedId, int medicoId, int pacienteId, string prescricaoUUIDMemed, DateTime? dataCadastro = null)
         {
-            Filtro = filtro;
+            PrescricaoMemedId = prescricaoMemedId;
+            MedicoId = medicoId;
+            PacienteId = pacienteId;
+            DataCadastro = dataCadastro != null ? dataCadastro.GetValueOrDefault() : DateTime.Now;
+            PrescricaoUUIDMemed = prescricaoUUIDMemed;
         }
 
-        public PrescricaoMemedViewModel()
+        public PrescricaoMemedViewModel(int id, int prescricaoMemedId, int medicoId, int pacienteId, string prescricaoUUIDMemed, DateTime? dataCadastro = null)
         {
-        }
-
-        public bool PermiteCriar()
-        {
-            if(Filtro != null && Filtro.PacienteId > 0 && Filtro.MedicoId > 0)
-            {
-                return true;
-            }
-
-            return false;
+            Id = id;
+            PrescricaoMemedId = prescricaoMemedId;
+            MedicoId = medicoId;
+            PacienteId = pacienteId;
+            DataCadastro = dataCadastro != null ? dataCadastro.GetValueOrDefault() : DateTime.Now;
+            PrescricaoUUIDMemed = prescricaoUUIDMemed;
         }
     }
 }

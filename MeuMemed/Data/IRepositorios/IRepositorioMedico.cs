@@ -7,5 +7,6 @@ namespace MeuMemed.Data.IRepositorios
     {
         Medico Obter(int id);
         List<Medico> ObterTodos();
+        Medico ObterPorCRM(string crm);
     }
 }

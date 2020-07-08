@@ -1,4 +1,4 @@
-﻿@model MeuMemed.ViewModel.PrescricaoMemed.PrescricaoMemedViewModel
+﻿@model MeuMemed.ViewModel.PrescricaoMemed.HomePrescricaoMemedViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -23,16 +23,16 @@
 
 @section Scripts{
 
-    @if(Model.PermiteCriar()){
+    @if (Model.PermiteCriar())
+    {
 
+        <script type="text/javascript"
+                src="https://sandbox.memed.com.br/modulos/plataforma.sinapse-prescricao/build/sinapse-prescricao.min.js"
+                data-token="@toten"
+                data-container="memed-container">
+        </script>
 
-    <script type="text/javascript"
-            src="https://sandbox.memed.com.br/modulos/plataforma.sinapse-prescricao/build/sinapse-prescricao.min.js"
-            data-token="@toten"
-            data-container="memed-container">
-    </script>
-
-    <script>
+        <script>
         MdSinapsePrescricao.event.add('core:moduleInit', function moduleInitHandler(module) {
             if (module.name === 'plataforma.prescricao') {
                 MdHub.command.send('plataforma.prescricao', 'setPaciente', {
@@ -51,11 +51,49 @@
             if (moduleData.name === 'plataforma.prescricao') {
 
                 MdHub.event.add('prescricaoImpressa', function (prescriptionData) {
+                    var idPrescricao = prescriptionData.prescricao.id;
+                    var dataCriacao = prescriptionData.prescricao.created_at;
+                    var prescricaoUuid = prescriptionData.prescricao.prescriptionUuid;
+                    var idPaciente = prescriptionData.prescricao.paciente.external_id;
+                    var medicoCRM = prescriptionData.prescricao.medicos.crm;
+                    //console.log(idPrescricao);
+                    //console.log(dataCriacao);
+                    //console.log(prescricaoUuid);
+                    //console.log(idPaciente);
+                    //console.log(medicoCRM);
+
+                    $.get("/PrescricaoMemed/Salvar", {
+                        idPrescricao: idPrescricao,
+                        dataCriacao: dataCriacao,
+                        prescricaoUuid: prescricaoUuid,
+                        idPaciente: idPaciente,
+                        medicoCRM: medicoCRM,
+                    })
+                        .done(function (data) {
+                            console.log(data);
+
+                            $.get("/Memed/ObterPrescricaoPdf", {
+                                idPrescricao: idPrescricao,
+                                medicoCRM: medicoCRM,
+                            })
+                                .done(function (data) {
+                                    console.log(data);
+                                })
+                                .fail(function (error) {
+                                    console.log('erro ao carregar os dados');
+                                    console.log(error);
+                                });
+                        })
+                        .fail(function (error) {
+                            console.log('erro ao carregar os dados');
+                            console.log(error);
+                        });
+
                     console.log(prescriptionData);
                 });
             }
         });
-    </script>
+        </script>
 
     }
 

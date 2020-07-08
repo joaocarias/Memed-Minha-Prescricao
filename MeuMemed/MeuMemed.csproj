@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Enums\" />
+    <Folder Include="ViewModel\NovaPasta\" />
   </ItemGroup>
 
 </Project>

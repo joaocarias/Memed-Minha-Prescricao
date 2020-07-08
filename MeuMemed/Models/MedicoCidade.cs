@@ -17,8 +17,7 @@ namespace MeuMemed.Models
         [Required]
         [Column("idmedico")]
         public int MedicoId { get; set; }
-
-        //NAV
+               
         [ForeignKey("MedicoId")]
         public Medico Medico { get; set; }
 

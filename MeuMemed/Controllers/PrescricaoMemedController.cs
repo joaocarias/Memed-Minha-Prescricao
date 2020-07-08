@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MeuMemed.Data;
 using MeuMemed.Data.IRepositorios;
+using MeuMemed.Models;
 using MeuMemed.ViewModel.PrescricaoMemed;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,20 +15,21 @@ namespace MeuMemed.Controllers
     {
         private readonly IRepositorioMedico _repositorioMedico;
         private readonly IRepositorioPaciente _repositorioPaciente;
+        private readonly Contexto _contexto;
 
-        public PrescricaoMemedController(IRepositorioMedico repositorioMedico, IRepositorioPaciente repositorioPaciente)
+        public PrescricaoMemedController(Contexto contexto, IRepositorioMedico repositorioMedico, IRepositorioPaciente repositorioPaciente)
         {
             _repositorioMedico = repositorioMedico;
             _repositorioPaciente = repositorioPaciente;
+            _contexto = contexto;
         }
 
         public IActionResult Index(FiltroPrescricaoMemedViewModel filtro = null)
         {
-            var model = new PrescricaoMemedViewModel(filtro);
+            var model = new HomePrescricaoMemedViewModel(filtro);
             if (filtro != null && filtro.MedicoId > 0)
             {
-                filtro.Medico = _repositorioMedico.Obter(filtro.MedicoId.GetValueOrDefault());
-                filtro.Medico.DefinirToten("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.WzM0Mzg0LCJlYTE4OTU2MzRiNjEwOTdmOGMwM2U5M2QzNWMwOTZmNCIsIjIwMjAtMDctMDIiLCJzaW5hcHNlLnByZXNjcmljYW8iLCJwYXJ0bmVyLjMuMjk3ODYiXQ.yDSRFIm72-EkI12oSMBUqSHFGq6msl7xnT4Ci9d9W40");
+                filtro.Medico = _repositorioMedico.Obter(filtro.MedicoId.GetValueOrDefault());               
             }
 
             if (filtro != null && filtro.PacienteId > 0)
@@ -37,6 +40,24 @@ namespace MeuMemed.Controllers
             GerarViewBags();
             return View(model);
         }
+
+        public IActionResult Salvar(int idPrescricao, DateTime dataCriacao, string prescricaoUuid, int idPaciente, string medicoCRM)
+        {
+            var medico = _repositorioMedico.ObterPorCRM(medicoCRM);
+            if (medico != null)
+            {
+                var prescricao = new PrescricaoMemed(idPrescricao, medico.MedicoId, idPaciente, prescricaoUuid, dataCriacao);
+                _contexto.PrescricoesMemed.Add(prescricao);
+                _contexto.SaveChanges();
+
+                return Ok("Prescricao Salva!");
+            }
+            else
+            {
+                return BadRequest("Não foi possível identificar o médico");
+            }          
+        }
+
 
 
         #region viewbag
